@@ -151,10 +151,12 @@ def generate_signal(data, selected_features):
     last_row = data[selected_features].iloc[-1]
     divergence_signal = compute_macd_divergence(data)
 
+    prediction = model.predict([last_row])[0]
+
     # Adjust thresholds based on your strategy
-    if last_row['MACD'] > 0 and last_row['RSI'] < 50:
+    if last_row['MACD'] > 0 and last_row['RSI'] < 50 and prediction == 1:
         return 'buy'
-    elif last_row['MACD'] < 0 and last_row['RSI'] > 50:
+    elif last_row['MACD'] < 0 and last_row['RSI'] > 50 and prediction == 0:
         return 'sell'
     return 'hold'
 
