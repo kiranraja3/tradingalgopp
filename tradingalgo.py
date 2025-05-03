@@ -127,13 +127,15 @@ def compute_macd_divergence(data):
         divergence_signal = 'bearish'
     return divergence_signal
 
-def feature_selection(data):
+model = XGBClassifier(use_label_encoder=False, eval_metric='logloss')
+
+def feature_selection(data, model):
     X = data.drop(columns=['returns']).fillna(0)  # Fill missing values
     y = (data['returns'] > 0).astype(int)  # Target: 1 for up, 0 for down
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-    model = XGBClassifier(use_label_encoder=False, eval_metric='logloss')
+    model.fit(X_train, y_train)
 
     rfecv = RFECV(estimator=model, step=1, cv=5, scoring='accuracy')
     rfecv.fit(X_train, y_train)
@@ -233,7 +235,7 @@ def main():
     data = smooth_indicators(data, sigma=2)
 
     # Feature selection
-    selected_features = feature_selection(data)
+    selected_features = feature_selection(data, model)
 
     # Continuous monitoring loop
     while True:
