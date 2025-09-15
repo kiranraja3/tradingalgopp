@@ -13,9 +13,9 @@ import time
 # Initialize logging
 logging.basicConfig(filename='trade_log.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
 
-# Alpaca API credentials (replace with your actual credentials)
-API_KEY = 'PK4UGGCM4FWLAEF8E1RQ'
-API_SECRET = '7GwJTQnUJL7PcbmHzl1odCC4Fg3jEQLlv7oYrBrQ'
+
+API_KEY = ''
+API_SECRET = ''
 BASE_URL = 'https://paper-api.alpaca.markets'
 
 # Initialize Alpaca API
